@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>C4 Model Diagrams - RAG System</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 2cm;
+            color: #333;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff;
+        }
+        
+        h1, h2, h3 {
+            color: #2c3e50;
+            page-break-after: avoid;
+        }
+        
+        h1 { 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 10px; 
+            font-size: 2.2em;
+            margin-top: 0;
+            text-align: center;
+        }
+        
+        h2 { 
+            border-bottom: 2px solid #bdc3c7; 
+            padding-bottom: 8px; 
+            font-size: 1.8em;
+            margin-top: 40px;
+            color: #34495e;
+        }
+        
+        h3 { 
+            font-size: 1.4em;
+            margin-top: 30px;
+            color: #7f8c8d;
+        }
+        
+        .mermaid {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .diagram-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .diagram-description {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: white;
+            border-bottom: none;
+            margin-bottom: 20px;
+        }
+        
+        .header p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        
+        .diagram-section {
+            margin: 50px 0;
+            padding: 30px;
+            background: #fafbfc;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        @media print {
+            body { 
+                margin: 1cm; 
+                background: white;
+            }
+            h1, h2, h3 { 
+                page-break-after: avoid; 
+            }
+            .mermaid { 
+                page-break-inside: avoid; 
+            }
+            .header {
+                background: #f8f9fa !important;
+                color: #333 !important;
+            }
+        }
+        
+        .page-break {
+            page-break-before: always;
+        }
+        
+        .no-break {
+            page-break-inside: avoid;
+        }
+    </style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.9.0/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: { 
+                useMaxWidth: true, 
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            themeVariables: {
+                primaryColor: '#3498db',
+                primaryTextColor: '#2c3e50',
+                lineColor: '#bdc3c7',
+                secondaryColor: '#ecf0f1'
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>C4 Model Diagrams</h1>
+        <p><strong>RAG (Retrieval-Augmented Generation) System</strong></p>
+        <p><strong>Team:</strong> Shahzaib Khan Gakhar | <strong>Date:</strong> August 17, 2025</p>
+    </div>
+    
+    <div class="diagram-section">
+        <h2>Level 1: System Context Diagram</h2>
+        <p>Shows the RAG system in its environment, highlighting the main user interactions and external dependencies on AI models.</p>
+        
+        <div class="mermaid">
+            graph TB
+                User[👤 User Asks questions about documents]
+                User --> Frontend[🌐 React Frontend Provides web interface for Q&A]
+                Frontend --> Backend[⚙️ FastAPI Backend Handles API requests and orchestrates RAG pipeline]
+                Backend --> RAG[🧠 RAG Pipeline Combines retrieval and generation]
+                RAG --> Documents[📚 Document Collection PDFs, text files, and other documents]
+                RAG --> Models[🤖 AI Models Sentence transformers and language models]
+                subgraph "External Systems"
+                    Models
+                end
+                subgraph "RAG System"
+                    Frontend
+                    Backend
+                    RAG
+                    Documents
+                end
+        </div>
+    </div>
+    
+    <div class="diagram-section">
+        <h2>Level 2: Container Diagram</h2>
+        <p>Shows the high-level technical building blocks that make up the RAG system and how they interact.</p>
+        
+        <div class="mermaid">
+            graph TB
+                User[👤 User] --> Frontend[🌐 React Frontend Port: 3000 Single Page Application]
+                Frontend --> Backend[⚙️ FastAPI Backend Port: 8000 RESTful API Server]
+                Backend --> Retriever[🔍 Document Retriever Processes documents and finds relevant chunks]
+                Backend --> Generator[🤖 Answer Generator Generates answers using language models]
+                Backend --> Pipeline[🔄 RAG Pipeline Orchestrates the entire workflow]
+                Backend --> Logger[📝 RAG Logger Tracks queries and responses]
+                Retriever --> FAISS[📊 FAISS Vector Index Stores document embeddings for similarity search]
+                Retriever --> Embeddings[🧮 Sentence Transformers Converts text to vectors]
+                Generator --> LLM[💭 Language Model Flan-T5-Base for answer generation]
+                subgraph "Data Storage"
+                    FAISS
+                    Documents[📁 PDF Documents Source documents for training]
+                    Logs[📋 Query Logs Historical query data]
+                end
+                subgraph "AI Models"
+                    Embeddings
+                    LLM
+                end
+                subgraph "Core Services"
+                    Retriever
+                    Generator
+                    Pipeline
+                    Logger
+                end
+        </div>
+    </div>
+    
+    <div class="diagram-section">
+        <h2>Level 3: Component Diagram</h2>
+        <p>Shows the components within each container and their relationships.</p>
+        
+        <div class="mermaid">
+            graph TB
+                subgraph "Frontend Components"
+                    App[App.js Main application component]
+                    Demo[QuestionAnswerApp Main Q&A interface]
+                    RetrieverExp[RetrieverExplanation Retriever documentation]
+                    GeneratorExp[GeneratorExplanation Generator documentation]
+                    Problems[Problems Issues and alternatives]
+                    Testing[TestingEvaluation Testing interface]
+                    App --> Demo
+                    App --> RetrieverExp
+                    App --> GeneratorExp
+                    App --> Problems
+                    App --> Testing
+                end
+                subgraph "Backend Components"
+                    MainAPI[main.py FastAPI application entry point]
+                    Pipeline[RAGPipeline Main orchestration class]
+                    Retriever[Retriever Document retrieval engine]
+                    Generator[Generator Answer generation engine]
+                    Logger[RAGLogger Logging and analytics]
+                    MainAPI --> Pipeline
+                    Pipeline --> Retriever
+                    Pipeline --> Generator
+                    Pipeline --> Logger
+                end
+                subgraph "Utility Components"
+                    Chunkers[Chunkers Text segmentation utilities]
+                    FileLoaders[File Loaders Document loading utilities]
+                    Utils[Utils General utility functions]
+                end
+                subgraph "Data Flow"
+                    Documents[PDF Documents Input documents]
+                    FileLoaders --> Chunkers
+                    Chunkers --> Retriever
+                    Retriever --> Generator
+                    Generator --> Response[API Response Generated answers]
+                end
+                subgraph "External Integrations"
+                    FAISS[FAISS Library Vector similarity search]
+                    Transformers[Hugging Face Transformers AI models]
+                    LangChain[LangChain LLM framework]
+                end
+                Retriever --> FAISS
+                Generator --> Transformers
+                Generator --> LangChain
+        </div>
+    </div>
+    
+    <div class="diagram-section">
+        <h2>Data Flow Diagrams</h2>
+        
+        <h3>Document Processing Flow</h3>
+        <div class="mermaid">
+            sequenceDiagram
+                participant U as User
+                participant F as Frontend
+                participant B as Backend
+                participant R as Retriever
+                participant G as Generator
+                participant L as Logger
+                U->>F: Upload PDF documents
+                F->>B: POST /documents
+                B->>R: Process documents
+                R->>R: Chunk text
+                R->>R: Generate embeddings
+                R->>R: Store in FAISS index
+                R->>B: Documents processed
+                B->>F: Processing complete
+                F->>U: Documents ready
+        </div>
+        
+        <h3>Question Answering Flow</h3>
+        <div class="mermaid">
+            sequenceDiagram
+                participant U as User
+                participant F as Frontend
+                participant B as Backend
+                participant R as Retriever
+                participant G as Generator
+                participant L as Logger
+                U->>F: Ask question
+                F->>B: POST /query
+                B->>R: Find relevant chunks
+                R->>R: Vector similarity search
+                R->>B: Return top chunks
+                B->>G: Generate answer
+                G->>G: Build prompt
+                G->>G: Process with LLM
+                G->>B: Return answer
+                B->>L: Log query and response
+                B->>F: Return answer
+                F->>U: Display answer
+        </div>
+        
+        <h3>Batch Processing Flow</h3>
+        <div class="mermaid">
+            sequenceDiagram
+                participant U as User
+                participant F as Frontend
+                participant B as Backend
+                participant R as Retriever
+                participant G as Generator
+                participant L as Logger
+                U->>F: Submit batch questions
+                F->>B: POST /batch
+                B->>B: Split into batches
+                loop For each batch
+                    B->>R: Retrieve chunks for batch
+                    R->>B: Return chunks
+                    B->>G: Generate answers for batch
+                    G->>B: Return answers
+                    B->>L: Log batch results
+                end
+                B->>F: Return all answers
+                F->>U: Display batch results
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p><strong>C4 Model Diagrams - RAG System Architecture</strong></p>
+        <p><strong>Document Version:</strong> 1.0.0 | <strong>Last Updated:</strong> August 17, 2025</p>
+        <p><strong>Maintainer:</strong> Shahzaib Khan Gakhar</p>
+        <p>This document contains all C4 model diagrams for the RAG system architecture.</p>
+    </div>
+</body>
+</html> 

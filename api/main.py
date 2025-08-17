@@ -56,7 +56,7 @@ class QueryResponse(BaseModel):
     retrieved_chunks: List[ChunkInfo]
     prompt: str
     generated_answer: str
-    group_id: str = "Team Pindi"
+    group_id: str = "Shahzaib Khan Gakhar"
 
 class BatchResponse(BaseModel):
     results: List[QueryResponse]
@@ -83,7 +83,7 @@ async def process_question(question: Question):
             prompt=result['prompt'],
             generated_answer=result['answer'],
             retrieval_scores=result['retrieval_scores'],
-            group_id="Team Pindi"
+            group_id="Shahzaib Khan Gakhar"
         )
         
         # Prepare response
@@ -127,7 +127,7 @@ async def process_batch(questions: BatchQuestions):
                 prompt=result['prompt'],
                 generated_answer=result['answer'],
                 retrieval_scores=result['retrieval_scores'],
-                group_id="Team Pindi"
+                group_id="Shahzaib Khan Gakhar"
             )
             
             # Prepare chunk infos

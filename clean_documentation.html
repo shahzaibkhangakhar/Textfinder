@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>RAG System Complete Documentation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 2cm;
+            color: #333;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ffffff;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            page-break-after: avoid;
+        }
+        
+        h1 { 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 10px; 
+            font-size: 2.2em;
+            margin-top: 0;
+        }
+        
+        h2 { 
+            border-bottom: 2px solid #bdc3c7; 
+            padding-bottom: 8px; 
+            font-size: 1.8em;
+            margin-top: 40px;
+        }
+        
+        h3 { 
+            font-size: 1.4em;
+            margin-top: 30px;
+        }
+        
+        code { 
+            background: #f8f9fa; 
+            padding: 2px 4px; 
+            border-radius: 3px; 
+            font-family: 'Courier New', monospace; 
+        }
+        
+        pre { 
+            background: #f8f9fa; 
+            padding: 15px; 
+            border-left: 4px solid #3498db; 
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        .mermaid {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .diagram-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .diagram-description {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: white;
+            border-bottom: none;
+            margin-bottom: 20px;
+        }
+        
+        .header p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .toc h2 {
+            border-bottom: none;
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .toc ol {
+            padding-left: 20px;
+        }
+        
+        .toc li {
+            margin: 8px 0;
+        }
+        
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .content-section {
+            margin: 40px 0;
+            padding: 20px;
+            background: #fafbfc;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        @media print {
+            body { 
+                margin: 1cm; 
+                background: white;
+            }
+            h1, h2, h3 { 
+                page-break-after: avoid; 
+            }
+            pre, table, .mermaid { 
+                page-break-inside: avoid; 
+            }
+            .header {
+                background: #f8f9fa !important;
+                color: #333 !important;
+            }
+        }
+        
+        .page-break {
+            page-break-before: always;
+        }
+        
+        .no-break {
+            page-break-inside: avoid;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            padding-left: 20px;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        ul, ol {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin: 5px 0;
+        }
+    </style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.9.0/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: { 
+                useMaxWidth: true, 
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            themeVariables: {
+                primaryColor: '#3498db',
+                primaryTextColor: '#2c3e50',
+                lineColor: '#bdc3c7',
+                secondaryColor: '#ecf0f1'
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>RAG System Complete Documentation</h1>
+        <p><strong>Project Name:</strong> RAG (Retrieval-Augmented Generation) System</p>
+        <p><strong>Version:</strong> 1.0.0 | <strong>Team:</strong> Shahzaib Khan Gakhar | <strong>Date:</strong> August 17, 2025</p>
+    </div>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ol>
+            <li><a href="#project-overview">Project Overview</a></li>
+            <li><a href="#system-architecture">System Architecture</a></li>
+            <li><a href="#c4-model-documentation">C4 Model Documentation</a></li>
+            <li><a href="#core-components">Core Components</a></li>
+            <li><a href="#technical-implementation">Technical Implementation</a></li>
+            <li><a href="#api-documentation">API Documentation</a></li>
+            <li><a href="#deployment-guide">Deployment Guide</a></li>
+            <li><a href="#performance--optimization">Performance & Optimization</a></li>
+            <li><a href="#troubleshooting">Troubleshooting</a></li>
+            <li><a href="#future-enhancements">Future Enhancements</a></li>
+        </ol>
+    </div>
+    
+    <div class="content-section">
+        <h2 id="project-overview">Project Overview</h2>
+        <p>A sophisticated question-answering system that combines document retrieval with AI-powered answer generation. The system processes PDF documents, creates semantic embeddings, and generates accurate answers based on retrieved context.</p>
+        
+        <h3>Key Features</h3>
+        <ul>
+            <li>Multi-format document processing (PDF, TXT, MD)</li>
+            <li>Advanced text chunking with semantic preservation</li>
+            <li>FAISS-based vector similarity search</li>
+            <li>Language model-powered answer generation</li>
+            <li>RESTful API with FastAPI backend</li>
+            <li>React-based web interface</li>
+            <li>Batch processing capabilities</li>
+        </ul>
+    </div>
+    
+    <div class="content-section">
+        <h2 id="system-architecture">System Architecture</h2>
+        
+        <h3>High-Level Architecture</h3>
+        <p>The RAG system follows a three-tier architecture:</p>
+        
+        <div style="text-align: center; margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+            <div style="font-weight: bold; margin-bottom: 15px;">Three-Tier Architecture</div>
+            <div style="font-family: monospace; text-align: left; display: inline-block;">
+                ┌─────────────────────────────────────────────────────────────┐<br>
+                │                    Presentation Layer                       │<br>
+                │                 (React Frontend)                           │<br>
+                └─────────────────────────────────────────────────────────────┘<br>
+                                          │<br>
+                                          ▼<br>
+                ┌─────────────────────────────────────────────────────────────┐<br>
+                │                    Application Layer                        │<br>
+                │                 (FastAPI Backend)                          │<br>
+                └─────────────────────────────────────────────────────────────┘<br>
+                                          │<br>
+                                          ▼<br>
+                ┌─────────────────────────────────────────────────────────────┐<br>
+                │                     Data Layer                             │<br>
+                │              (Documents + Vector Store)                    │<br>
+                └─────────────────────────────────────────────────────────────┘
+            </div>
+        </div>
+        
+        <h3>Component Interaction</h3>
+        <div class="mermaid">
+            graph LR
+                A[User Input] --> B[Frontend]
+                B --> C[FastAPI Backend]
+                C --> D[RAG Pipeline]
+                D --> E[Retriever]
+                D --> F[Generator]
+                E --> G[FAISS Index]
+                F --> H[Language Model]
+                G --> I[Document Chunks]
+                H --> J[Generated Answer]
+                I --> F
+                J --> C
+                C --> B
+                B --> K[User Output]
+        </div>
+    </div>
+    
+    <div class="content-section">
+        <h2 id="c4-model-documentation">C4 Model Documentation</h2>
+        
+        <h3>Level 1: System Context Diagram</h3>
+        <p>Shows the RAG system in its environment, highlighting the main user interactions and external dependencies on AI models.</p>
+        
+        <div class="mermaid">
+            graph TB
+                User[👤 User Asks questions about documents]
+                User --> Frontend[🌐 React Frontend Provides web interface for Q&A]
+                Frontend --> Backend[⚙️ FastAPI Backend Handles API requests and orchestrates RAG pipeline]
+                Backend --> RAG[🧠 RAG Pipeline Combines retrieval and generation]
+                RAG --> Documents[📚 Document Collection PDFs, text files, and other documents]
+                RAG --> Models[🤖 AI Models Sentence transformers and language models]
+                subgraph "External Systems"
+                    Models
+                end
+                subgraph "RAG System"
+                    Frontend
+                    Backend
+                    RAG
+                    Documents
+                end
+        </div>
+        
+        <h3>Level 2: Container Diagram</h3>
+        <p>Shows the high-level technical building blocks that make up the RAG system and how they interact.</p>
+        
+        <div class="mermaid">
+            graph TB
+                User[👤 User] --> Frontend[🌐 React Frontend Port: 3000 Single Page Application]
+                Frontend --> Backend[⚙️ FastAPI Backend Port: 8000 RESTful API Server]
+                Backend --> Retriever[🔍 Document Retriever Processes documents and finds relevant chunks]
+                Backend --> Generator[🤖 Answer Generator Generates answers using language models]
+                Backend --> Pipeline[🔄 RAG Pipeline Orchestrates the entire workflow]
+                Backend --> Logger[📝 RAG Logger Tracks queries and responses]
+                Retriever --> FAISS[📊 FAISS Vector Index Stores document embeddings for similarity search]
+                Retriever --> Embeddings[🧮 Sentence Transformers Converts text to vectors]
+                Generator --> LLM[💭 Language Model Flan-T5-Base for answer generation]
+                subgraph "Data Storage"
+                    FAISS
+                    Documents[📁 PDF Documents Source documents for training]
+                    Logs[📋 Query Logs Historical query data]
+                end
+                subgraph "AI Models"
+                    Embeddings
+                    LLM
+                end
+                subgraph "Core Services"
+                    Retriever
+                    Generator
+                    Pipeline
+                    Logger
+                end
+        </div>
+        
+        <h3>Level 3: Component Diagram</h3>
+        <p>Shows the components within each container and their relationships.</p>
+        
+        <div class="mermaid">
+            graph TB
+                subgraph "Frontend Components"
+                    App[App.js Main application component]
+                    Demo[QuestionAnswerApp Main Q&A interface]
+                    RetrieverExp[RetrieverExplanation Retriever documentation]
+                    GeneratorExp[GeneratorExplanation Generator documentation]
+                    Problems[Problems Issues and alternatives]
+                    Testing[TestingEvaluation Testing interface]
+                    App --> Demo
+                    App --> RetrieverExp
+                    App --> GeneratorExp
+                    App --> Problems
+                    App --> Testing
+                end
+                subgraph "Backend Components"
+                    MainAPI[main.py FastAPI application entry point]
+                    Pipeline[RAGPipeline Main orchestration class]
+                    Retriever[Retriever Document retrieval engine]
+                    Generator[Generator Answer generation engine]
+                    Logger[RAGLogger Logging and analytics]
+                    MainAPI --> Pipeline
+                    Pipeline --> Retriever
+                    Pipeline --> Generator
+                    Pipeline --> Logger
+                end
+                subgraph "Utility Components"
+                    Chunkers[Chunkers Text segmentation utilities]
+                    FileLoaders[File Loaders Document loading utilities]
+                    Utils[Utils General utility functions]
+                end
+                subgraph "Data Flow"
+                    Documents[PDF Documents Input documents]
+                    FileLoaders --> Chunkers
+                    Chunkers --> Retriever
+                    Retriever --> Generator
+                    Generator --> Response[API Response Generated answers]
+                end
+                subgraph "External Integrations"
+                    FAISS[FAISS Library Vector similarity search]
+                    Transformers[Hugging Face Transformers AI models]
+                    LangChain[LangChain LLM framework]
+                end
+                Retriever --> FAISS
+                Generator --> Transformers
+                Generator --> LangChain
+        </div>
+    </div>
+    
+    <div class="content-section">
+        <h2 id="core-components">Core Components</h2>
+        
+        <h3>1. Document Retriever</h3>
+        <p>The retriever component is responsible for processing documents and finding relevant information.</p>
+        
+        <h4>Key Features</h4>
+        <ul>
+            <li><strong>Smart Text Chunking:</strong> Uses RecursiveCharacterTextSplitter for intelligent document segmentation</li>
+            <li><strong>Vector Embeddings:</strong> Converts text chunks into high-dimensional vectors using sentence transformers</li>
+            <li><strong>FAISS Indexing:</strong> Efficient similarity search using Facebook's FAISS library</li>
+            <li><strong>Metadata Tracking:</strong> Maintains source information and processing timestamps</li>
+        </ul>
+        
+        <h3>2. Answer Generator</h3>
+        <p>The generator component processes retrieved context and generates accurate answers.</p>
+        
+        <h4>Key Features</h4>
+        <ul>
+            <li><strong>Structured Prompts:</strong> Carefully crafted prompts for consistent output</li>
+            <li><strong>Context Integration:</strong> Incorporates retrieved chunks into generation process</li>
+            <li><strong>Batch Processing:</strong> Efficient handling of multiple queries</li>
+            <li><strong>Response Formatting:</strong> Structured and readable answer generation</li>
+        </ul>
+        
+        <h3>3. RAG Pipeline</h3>
+        <p>The pipeline orchestrates the entire workflow from question to answer.</p>
+        
+        <h4>Data Flow</h4>
+        <ol>
+            <li>User submits question</li>
+            <li>Retriever finds relevant document chunks</li>
+            <li>Generator creates structured prompt</li>
+            <li>Language model generates answer</li>
+            <li>Response is formatted and returned</li>
+        </ol>
+    </div>
+    
+    <div class="content-section">
+        <h2 id="technical-implementation">Technical Implementation</h2>
+        
+        <h3>Dependencies</h3>
+        <table>
+            <tr>
+                <th>Package</th>
+                <th>Version</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td>fastapi</td>
+                <td>0.104.1</td>
+                <td>Web framework</td>
+            </tr>
+            <tr>
+                <td>uvicorn</td>
+                <td>0.24.0</td>
+                <td>ASGI server</td>
+            </tr>
+            <tr>
+                <td>sentence-transformers</td>
+                <td>2.2.2</td>
+                <td>Text embeddings</td>
+            </tr>
+            <tr>
+                <td>faiss-cpu</td>
+                <td>1.7.4</td>
+                <td>Vector similarity search</td>
+            </tr>
+            <tr>
+                <td>langchain</td>
+                <td>0.0.267</td>
+                <td>LLM framework</td>
+            </tr>
+        </table>
+        
+        <h3>Architecture Patterns</h3>
+        <ul>
+            <li><strong>Modular Design:</strong> Each component has a single responsibility</li>
+            <li><strong>Pipeline Pattern:</strong> Sequential data flow through components</li>
+            <li><strong>Factory Pattern:</strong> Dynamic model loading and configuration</li>
+        </ul>
+    </div>
+    
+    <div class="content-section">
+        <h2 id="api-documentation">API Documentation</h2>
+        
+        <h3>Endpoints</h3>
+        
+        <h4>1. Single Question Processing</h4>
+        <pre><code>POST /query
+Content-Type: application/json
+
+{
+    "question": "When did Imran Khan start his cricket career?"
+}</code></pre>
+        
+        <h4>2. Batch Question Processing</h4>
+        <pre><code>POST /batch
+Content-Type: application/json
+
+{
+    "questions": [
+        "When did Imran Khan start his cricket career?",
+        "What was his role in the 1992 World Cup?"
+    ]
+}</code></pre>
+        
+        <h4>3. System Information</h4>
+        <pre><code>GET /</code></pre>
+    </div>
+    
+    <div class="content-section">
+        <h2 id="deployment-guide">Deployment Guide</h2>
+        
+        <h3>Prerequisites</h3>
+        <ul>
+            <li><strong>Python:</strong> 3.9 or higher</li>
+            <li><strong>Memory:</strong> Minimum 4GB RAM</li>
+            <li><strong>Storage:</strong> 2GB free space</li>
+            <li><strong>Network:</strong> Internet access for model downloads</li>
+        </ul>
+        
+        <h3>Local Development</h3>
+        <pre><code># Clone repository
+git clone &lt;repository-url&gt;
+cd NLProc-Proj-M
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run development server
+python -m uvicorn api.main:app --host 127.0.0.1 --port 8000 --reload</code></pre>
+    </div>
+    
+    <div class="content-section">
+        <h2 id="performance--optimization">Performance & Optimization</h2>
+        
+        <h3>Chunk Size Optimization</h3>
+        <ul>
+            <li><strong>Academic papers:</strong> chunk_size=256, overlap=50</li>
+            <li><strong>News articles:</strong> chunk_size=512, overlap=100</li>
+            <li><strong>Technical docs:</strong> chunk_size=384, overlap=75</li>
+        </ul>
+        
+        <h3>FAISS Index Selection</h3>
+        <ul>
+            <li><strong>Small datasets:</strong> IndexFlatL2</li>
+            <li><strong>Medium datasets:</strong> IndexIVFFlat</li>
+            <li><strong>Large datasets:</strong> IndexIVFPQ</li>
+        </ul>
+    </div>
+    
+    <div class="content-section">
+        <h2 id="troubleshooting">Troubleshooting</h2>
+        
+        <h3>Common Issues</h3>
+        <ul>
+            <li><strong>Dependency Conflicts:</strong> Use compatible versions from requirements-prod.txt</li>
+            <li><strong>Memory Issues:</strong> Reduce chunk size or use smaller embedding models</li>
+            <li><strong>Model Download Failures:</strong> Check internet connection and model availability</li>
+            <li><strong>FAISS Index Errors:</strong> Rebuild index or use smaller index types</li>
+        </ul>
+    </div>
+    
+    <div class="content-section">
+        <h2 id="future-enhancements">Future Enhancements</h2>
+        
+        <h3>Planned Features</h3>
+        <ul>
+            <li><strong>Advanced Chunking:</strong> AI-powered text segmentation</li>
+            <li><strong>Enhanced Search:</strong> Hybrid vector and keyword search</li>
+            <li><strong>Model Improvements:</strong> Custom model training and ensemble models</li>
+            <li><strong>User Experience:</strong> Conversation history and confidence scoring</li>
+        </ul>
+    </div>
+    
+    <div class="footer">
+        <p><strong>Document Version:</strong> 1.0.0 | <strong>Last Updated:</strong> August 17, 2025</p>
+        <p><strong>Maintainer:</strong> Shahzaib Khan Gakhar</p>
+        <p>This document provides comprehensive coverage of the RAG system architecture, implementation details, and operational guidelines.</p>
+    </div>
+</body>
+</html> 

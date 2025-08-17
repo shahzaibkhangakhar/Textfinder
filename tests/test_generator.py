@@ -62,7 +62,7 @@ def test_retrieval(setup_test_env):
         prompt="",
         generated_answer="",
         retrieval_scores=[result['score'] for result in results],
-        group_id="Team Pindi"
+        group_id="Shahzaib Khan Gakhar"
     )
     
     assert len(results) > 0
@@ -92,7 +92,7 @@ def test_answer_generation(setup_test_env):
         prompt=generator.build_prompt(context, question),
         generated_answer=answer,
         retrieval_scores=[chunk['score'] for chunk in chunks],
-        group_id="Team Pindi"
+        group_id="Shahzaib Khan Gakhar"
     )
     
     assert isinstance(answer, str)
@@ -118,7 +118,7 @@ def test_answer_generation(setup_test_env):
 #         prompt=generator.build_prompt(context, question),
 #         generated_answer=answer,
 #         retrieval_scores=[chunk['score'] for chunk in chunks],
-#         group_id="Team Pindi"
+#         group_id="Shahzaib Khan Gakhar"
 #     )
     
 #     # Check if answer contains words from context
@@ -159,7 +159,7 @@ def test_answer_generation(setup_test_env):
         prompt=generator.build_prompt(context, question),
         generated_answer=answer1,
         retrieval_scores=[chunk['score'] for chunk in chunks],
-        group_id="Team Pindi"
+        group_id="Shahzaib Khan Gakhar"
     )
     
     logger.log_query(
@@ -168,7 +168,7 @@ def test_answer_generation(setup_test_env):
         prompt=generator.build_prompt(context, question),
         generated_answer=answer2,
         retrieval_scores=[chunk['score'] for chunk in chunks],
-        group_id="Team Pindi"
+        group_id="Shahzaib Khan Gakhar"
     )
     
     print(f"\nFirst Answer: {answer1}")
@@ -237,7 +237,7 @@ def run_test_suite():
             prompt=generator.build_prompt(context, question),
             generated_answer=answer,
             retrieval_scores=[chunk['score'] for chunk in chunks],
-            group_id="Team Pindi"
+            group_id="Shahzaib Khan Gakhar"
         )
         
         results.append({
