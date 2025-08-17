@@ -1,0 +1,11 @@
+# Core FastAPI dependencies only
+fastapi==0.104.1
+uvicorn==0.24.0
+pydantic>=2.7.0,<3.0.0
+
+# Essential ML dependencies only
+sentence-transformers==2.2.2
+faiss-cpu==1.7.4
+
+# File processing only
+pdfplumber==0.10.3 

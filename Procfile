@@ -1,1 +1,1 @@
-web: uvicorn api.main:app --host 0.0.0.0 --port $PORT 
+web: pip install -r requirements-ultra-minimal.txt && uvicorn api.main:app --host 0.0.0.0 --port $PORT 
