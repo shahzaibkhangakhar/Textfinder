@@ -1,5 +1,5 @@
-# Use Python 3.9 slim image to reduce base size
-FROM python:3.9-slim as builder
+# Use Python 3.10 slim image to support newer langchain versions
+FROM python:3.10-slim as builder
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -16,7 +16,7 @@ COPY requirements-prod.txt .
 RUN pip install --no-cache-dir -r requirements-prod.txt
 
 # Production stage
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 # Install only runtime system dependencies
 RUN apt-get update && apt-get install -y \
