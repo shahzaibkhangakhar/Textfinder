@@ -1,0 +1,12 @@
+RAG System Notes
+        
+        A Retrieval-Augmented Generation (RAG) system combines:
+        1. Document retrieval using semantic search
+        2. Text generation using language models
+        3. Context-aware answer generation
+        
+        Benefits:
+        - More accurate answers
+        - Up-to-date information
+        - Source attribution
+        - Reduced hallucination
